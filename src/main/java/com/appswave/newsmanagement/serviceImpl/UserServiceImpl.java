@@ -1,7 +1,6 @@
-package com.appswave.newsmanagement.service;
+package com.appswave.newsmanagement.serviceImpl;
 
 import com.appswave.newsmanagement.dto.UserDto;
-import com.appswave.newsmanagement.mapper.UserMapper;
 import com.appswave.newsmanagement.dto.UserLoginDto;
 import com.appswave.newsmanagement.dto.UserRegistrationDto;
 import com.appswave.newsmanagement.exception.EmailAlreadyTakenException;
@@ -9,9 +8,9 @@ import com.appswave.newsmanagement.exception.InvalidPasswordException;
 import com.appswave.newsmanagement.exception.UserNotFoundException;
 import com.appswave.newsmanagement.model.User;
 import com.appswave.newsmanagement.repository.UserRepository;
-import com.appswave.newsmanagement.util.JwtUtil;
 import com.appswave.newsmanagement.util.Role;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,14 +18,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import org.springframework.security.access.AccessDeniedException;
-
 import java.util.Collection;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class UserService {
+public class UserServiceImpl {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

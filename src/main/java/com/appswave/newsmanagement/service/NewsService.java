@@ -1,47 +1,16 @@
 package com.appswave.newsmanagement.service;
 
+import com.appswave.newsmanagement.dto.UserDto;
 import com.appswave.newsmanagement.model.News;
-import com.appswave.newsmanagement.model.User;
-import com.appswave.newsmanagement.repository.NewsRepository;
-import com.appswave.newsmanagement.util.NewsEvents;
-import com.appswave.newsmanagement.util.NewsState;
-import lombok.AllArgsConstructor;
-import org.springframework.statemachine.StateMachine;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@AllArgsConstructor
-public class NewsService {
+public interface NewsService {
+    News addNews(News news);
+    void deleteNews(Long newsId, UserDto userDto);
 
-    private final NewsRepository newsRepository;
+    void approveNews(Long id);
+    List<News> getAllApprovedNews();
 
-    private final StateMachine<NewsState, NewsEvents> stateMachine;
-
-    public News addNews(News news) {
-        news.setState(NewsState.PENDING); // Set default state to Pending
-        return newsRepository.save(news);
-    }
-
-    public void deleteNews(Long newsId, User user) {
-        News news = newsRepository.findById(newsId)
-                .orElseThrow(() -> new IllegalArgumentException("News not found"));
-
-        if (news.getState() == NewsState.PENDING /*|| user.isAdmin()*/) {
-            newsRepository.delete(news);
-        } else {
-            throw new IllegalStateException("Cannot delete approved news without admin approval.");
-        }
-    }
-
-    public News getNewsById(Long id) {
-        return newsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("News not found"));
-    }
-
-    public List<News> getAllApprovedNews() {
-        return newsRepository.findByState(NewsState.APPROVED);
-    }
+    void rejectNews(Long id);
 }
-

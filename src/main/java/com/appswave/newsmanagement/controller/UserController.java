@@ -17,20 +17,23 @@ public class UserController {
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public ResponseEntity<List<User>> getAllUsers() {
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
     }
 
     @GetMapping("/{email}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<User> getUserByEmail(@PathVariable String email) {
-        return ResponseEntity.ok(userService.getUserByEmail(email));
+        User user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/{email}")
     @PreAuthorize("hasRole('ADMIN') or #email == principal.username")
     public ResponseEntity<User> updateUser(@PathVariable String email, @RequestBody User user) {
-        return ResponseEntity.ok(userService.updateUser(email, user));
+        User updatedUser = userService.updateUser(email, user);
+        return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{email}")

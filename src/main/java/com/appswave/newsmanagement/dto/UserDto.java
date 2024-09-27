@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -15,5 +16,6 @@ public class UserDto {
     private String email;
     private String password;
     private Date dateOfBirth;
+    private String role;
 }
 

@@ -8,17 +8,19 @@ import org.springframework.statemachine.config.StateMachineConfigurerAdapter;
 import org.springframework.statemachine.config.builders.StateMachineStateConfigurer;
 import org.springframework.statemachine.config.builders.StateMachineTransitionConfigurer;
 
+import java.util.EnumSet;
+
 @Configuration
 @EnableStateMachine
 public class StateMachineConfig extends StateMachineConfigurerAdapter<NewsState, NewsEvents> {
-
     @Override
     public void configure(StateMachineStateConfigurer<NewsState, NewsEvents> states) throws Exception {
         states
                 .withStates()
                 .initial(NewsState.PENDING)
-                .state(NewsState.APPROVED)
-                .state(NewsState.DELETED);
+                .states(EnumSet.allOf(NewsState.class))
+                .end(NewsState.APPROVED)
+                .end(NewsState.REJECTED);
     }
 
     @Override
@@ -28,7 +30,6 @@ public class StateMachineConfig extends StateMachineConfigurerAdapter<NewsState,
                 .source(NewsState.PENDING).target(NewsState.APPROVED).event(NewsEvents.APPROVE)
                 .and()
                 .withExternal()
-                .source(NewsState.PENDING).target(NewsState.DELETED).event(NewsEvents.DELETE);
+                .source(NewsState.PENDING).target(NewsState.REJECTED).event(NewsEvents.REJECT);
     }
 }
-

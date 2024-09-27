@@ -6,6 +6,7 @@ import com.appswave.newsmanagement.repository.NewsRepository;
 import com.appswave.newsmanagement.service.NewsService;
 import com.appswave.newsmanagement.util.NewsEvents;
 import com.appswave.newsmanagement.util.NewsState;
+import com.appswave.newsmanagement.util.Role;
 import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,8 +81,8 @@ public class NewsServiceImpl implements NewsService {
     }
     private boolean canDeleteNews(News news, UserDto userDto) {
         boolean isPending = news.getState().equals(NewsState.PENDING.name());
-        boolean isContentWriter = userDto.getRole().equalsIgnoreCase("CONTENT_WRITER");
-        boolean isAdmin = userDto.getRole().equalsIgnoreCase("ADMIN");
+        boolean isContentWriter = userDto.getRole().equalsIgnoreCase(Role.CONTENT_WRITER.name());
+        boolean isAdmin = userDto.getRole().equalsIgnoreCase(Role.ADMIN.name());
 
         return (isPending && (isContentWriter || isAdmin)) || isAdmin;
     }

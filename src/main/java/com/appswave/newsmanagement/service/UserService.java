@@ -61,7 +61,7 @@ public class UserService {
         return userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException("User not found with email: " + email));
     }
 
-    public User updateUser(String email, User userDetails) {
+    public User updateUser(String email, UserRegistrationDto userDetails) {
         User user = getUserByEmail(email);
         user.setFullName(userDetails.getFullName());
         user.setDateOfBirth(userDetails.getDateOfBirth());

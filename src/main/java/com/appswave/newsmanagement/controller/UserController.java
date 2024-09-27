@@ -1,5 +1,6 @@
 package com.appswave.newsmanagement.controller;
 
+import com.appswave.newsmanagement.dto.UserRegistrationDto;
 import com.appswave.newsmanagement.model.User;
 import com.appswave.newsmanagement.service.UserService;
 import lombok.AllArgsConstructor;
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/users")
 public class UserController {
     private final UserService userService;
 
@@ -31,7 +32,10 @@ public class UserController {
 
     @PutMapping("/{email}")
     @PreAuthorize("hasRole('ADMIN') or #email == principal.username")
-    public ResponseEntity<User> updateUser(@PathVariable String email, @RequestBody User user) {
+    public ResponseEntity<User> updateUser(@PathVariable String email, @RequestBody UserRegistrationDto user) {
+        if (!email.equalsIgnoreCase(user.getEmail())) {
+            return ResponseEntity.badRequest().body(null);
+        }
         User updatedUser = userService.updateUser(email, user);
         return ResponseEntity.ok(updatedUser);
     }

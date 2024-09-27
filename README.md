@@ -102,6 +102,12 @@ Run the Application:
     Description: Rejects a news article by ID.
     Response: Returns HTTP 204 No Content.
 
+## Additional Technical API Documentation
+For detailed information on all available API endpoints, including request/response examples, please refer to the following link:
+        
+    https://documenter.getpostman.com/view/26185546/2sAXqy3KDb
+
+
 ## Token Management
 
   Access and refresh tokens are validated during user authentication.

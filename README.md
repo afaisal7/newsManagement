@@ -117,6 +117,6 @@ For detailed information on all available API endpoints, including request/respo
 ## Additional Notes
   Configure MySQL with Docker
 
-  To run MySQL using Docker, ensure you have Docker and Docker Compose installed. Start the MySQL server by navigating to the directory containing the docker-compose.yml file and running:
+  To run MySQL using Docker, ensure you have Docker and Docker Compose installed. Start the MySQL server by navigating to the directory containing the docker-compose.yml file 'src/main/resources/static' and running:
 
     docker-compose up -d
